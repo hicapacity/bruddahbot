@@ -4,5 +4,7 @@ set -e
 
 npm install
 export PATH="node_modules/.bin:node_modules/hubot/node_modules/.bin:$PATH"
+#export HUBOT_LOG_LEVEL="debug"
+#export REDIS_URL="redis://localhost:6379/hubot"
 
 exec node_modules/.bin/hubot "$@"
