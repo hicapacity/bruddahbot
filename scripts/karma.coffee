@@ -21,7 +21,7 @@ scores = [
 ]
 
 module.exports = (robot) ->
-  robot.hear /^([\w\S]+)([-+]{2})/, (msg) ->
+  robot.hear /^(\w+)(--|\+\+)$/, (msg) ->
     # parse out the user and operator
     [_, user, operator] = msg.match
     user = user.replace(/(^\s*@)|([,:\s]*$)/g, '').trim().toLowerCase()
@@ -39,7 +39,7 @@ module.exports = (robot) ->
     # let 'em know
     msg.send(msg.random(scores)(user, karmaForUser, oldKarmaForUser))
 
-  robot.respond /score ([\w\S]+)/i, (msg) ->
+  robot.respond /score (\w+)/i, (msg) ->
     # parse out the user
     [_, user] = msg.match
     user = user.replace(/(^\s*@)|([,:\s]*$)/g, '').trim().toLowerCase()
