@@ -21,7 +21,7 @@ scores = [
 ]
 
 module.exports = (robot) ->
-  robot.hear /^\@?([\w.]+)(--|\+\+)$/, (msg) ->
+  robot.hear /^\@?([\w.]+)(--|\+\+)$/m, (msg) ->
     # parse out the user and operator
     [_, user, operator] = msg.match
     user = user.replace(/(^\s*@)|([,:\s]*$)/g, '').trim().toLowerCase()
