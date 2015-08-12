@@ -12,10 +12,10 @@
 #   Bob Matcuk
 
 scores = [
-  (u,k) -> "Ho brah, #{u} #{k} da kine!"
+  (u,k) -> "Ho brah, #{u} #{k} da kine! :shaka:"
   (u,k,o) ->
     if o?
-      if k > o then "#{u} goin #{o} fo #{k} da kine!" else "#{u} wen #{o} fo #{k} da kine."
+      if k > o then "#{u} goin #{o} fo #{k} da kine! :shaka:" else "#{u} wen #{o} fo #{k} da kine."
     else
       "#{u} stay #{k} da kine."
 ]
