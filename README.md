@@ -12,6 +12,17 @@ Bruddahbot stay local:
 
 After startup, bruddahbot will be called hubot because.
 
+## Installing Your Very Own Bruddahbot(tm)
+
+Bruddahbot stay Heroku and Redis Cloud, want config:
+
+```bash
+HUBOT_SLACK_BOTNAME: bruddahbot
+HUBOT_SLACK_TEAM:    your team name here
+HUBOT_SLACK_TOKEN:   your token here
+REDISCLOUD_URL:      redis://rediscloud:etc etc etc
+```
+
 ## Contributing
 
 First, you should consider writing your functionality as a [hubot-script](https://github.com/github/hubot-scripts/blob/master/CONTRIBUTING.md) so you can share with the community.
