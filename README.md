@@ -7,18 +7,24 @@ Everyone's favorite slack da kine. Cheehoo!
 Bruddahbot stay local:
 
 ```bash
-% env REDIS_URL="..." bin/hubot
+% env REDIS_URL="http://localhost" bin/hubot
 ```
 
 After startup, bruddahbot will be called hubot because.
 
 ## Contributing
 
-First, you should consider writing your functionality as a [hubot-script](https://github.com/github/hubot-scripts/blob/master/CONTRIBUTING.md) so you can share with the community.
+First, you should consider writing your functionality as a [hubot-script] so
+you can share with the community.
 
-If you really want to mess with code in this repo, fork it and submit a pull request. That's the best way to ensure that your changes will actually make it into the actual running instance of Bruddahbot.
+If you really want to mess with code in this repo, fork it and submit a pull
+request. That's the best way to ensure that your changes will actually make it
+into the actual running instance of Bruddahbot.
 
 ## Shoots
 
 If you need any info or help, message @bob in slack.
 
+
+
+[hubot-script](https://github.com/github/hubot-scripts/blob/master/CONTRIBUTING.md)
