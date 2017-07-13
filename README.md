@@ -38,4 +38,4 @@ If you need any info or help, message @bob in slack.
 
 
 
-[hubot-script](https://github.com/github/hubot-scripts/blob/master/CONTRIBUTING.md)
+[hubot-script]: https://github.com/github/hubot-scripts/blob/master/CONTRIBUTING.md
