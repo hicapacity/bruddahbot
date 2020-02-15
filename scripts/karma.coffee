@@ -20,24 +20,47 @@ scores = [
       "#{u} stay #{k} da kine."
 ]
 
+getUserKarmaExpression = (userKarmaToken) ->
+  username = if userKarmaToken.startsWith('@')
+  then userKarmaToken.slice(1, -2)
+  else userKarmaToken.slice(0, -2)
+
+  operator = userKarmaToken.slice(-2)
+
+  {
+    type: 'UserKarmaExpression',
+    username: username.toLowerCase(),
+    operator
+  }
+
+getUserKarmaExpressions = (userKarmaTokens) ->
+  userKarmaTokens.map getUserKarmaExpression
+
 module.exports = (robot) ->
-  robot.hear /^\@?([\w.]+)(--|\+\+)(\s.*)?$/m, (msg) ->
-    # parse out the user and operator
-    [_, user, operator] = msg.match
-    user = user.replace(/(^\s*@)|([,:\s]*$)/g, '').trim().toLowerCase()
-    return if user is msg.message.user.name.toLowerCase()
+  # Matches all occurances of karma tokens in a message
+  # Examples:
+  # * [@user++] is the best!
+  # * Mahalo [user++]!
+  # * Thanks [@user1++] [@user2++] [@user3++]!
+  #   But not [user4--] :(
 
-    # get the current karma points
-    karma = robot.brain.get('karmaKine') or {}
-    oldKarmaForUser = karma[user] | 0
+  robot.hear /\@?([\w.]+)(--|\+\+)/g, (msg) ->
+    # user shouldn't be able to give themselves karma
+    userKarmaExpressions = getUserKarmaExpressions(msg.match)
+      .filter((expr) -> expr.username != msg.message.user.name.toLowerCase())
 
-    # update the karma
-    karmaForUser = if operator is '++' then oldKarmaForUser + 1 else oldKarmaForUser - 1
-    karma[user] = karmaForUser
-    robot.brain.set('karmaKine', karma)
+    for { username, operator } in userKarmaExpressions
+      # get the current karma points
+      karma = robot.brain.get('karmaKine') or {}
+      oldKarmaForUser = karma[username] | 0
 
-    # let 'em know
-    msg.send(msg.random(scores)(user, karmaForUser, oldKarmaForUser))
+      # update the karma
+      karmaForUser = if operator is '++' then oldKarmaForUser + 1 else oldKarmaForUser - 1
+      karma[username] = karmaForUser
+      robot.brain.set('karmaKine', karma)
+
+      # let 'em know
+      msg.send(msg.random(scores)(username, karmaForUser, oldKarmaForUser))
 
   robot.respond /score (\w+)/i, (msg) ->
     # parse out the user
