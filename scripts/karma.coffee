@@ -45,9 +45,16 @@ module.exports = (robot) ->
   #   But not [user4--] :(
 
   robot.hear /\@?([\w.]+)(--|\+\+)/g, (msg) ->
+    seenUsernames = new Set()
     # user shouldn't be able to give themselves karma
     userKarmaExpressions = getUserKarmaExpressions(msg.match)
-      .filter((expr) -> expr.username != msg.message.user.name.toLowerCase())
+      .filter((expr) ->
+        # Only keep the first expression seen for the user
+        unless seenUsernames.has(expr.username)
+          seenUsernames.add(expr.username)
+          # don't let user adjust their own score
+          expr.username != msg.message.user.name.toLowerCase())
+      .filter((expr, index) -> expr.username)
 
     for { username, operator } in userKarmaExpressions
       # get the current karma points
