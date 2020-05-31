@@ -23,8 +23,8 @@ scores = [
 getUserKarmaExpression = (userKarmaToken) ->
   hasAtSymbol = userKarmaToken.startsWith('@')
   username = if hasAtSymbol
-    then userKarmaToken.slice(1, -2)
-    else userKarmaToken.slice(0, -2)
+  then userKarmaToken.slice(1, -2)
+  else userKarmaToken.slice(0, -2)
 
   operator = userKarmaToken.slice(-2)
 
@@ -56,8 +56,7 @@ module.exports = (robot) ->
           # don't let user adjust their own score, and ignore "c" unless it
           # starts with a "@" because "c++" is probably a mention of the
           # language, not a person or thing
-          expr.username != msg.message.user.name.toLowerCase()) &&
-            (expr.username !== 'c' || expr.hasAtSymbol)
+          expr.username != msg.message.user.name.toLowerCase()) && (expr.username != 'c' || expr.hasAtSymbol)
 
     for { username, operator } in userKarmaExpressions
       # get the current karma points
