@@ -30,6 +30,7 @@ getUserKarmaExpression = (userKarmaToken) ->
 
   {
     type: 'UserKarmaExpression',
+    isMentioned: hasAtSymbol,
     username: username.toLowerCase(),
     operator
   }
