@@ -23,13 +23,13 @@ scores = [
 getUserKarmaExpression = (userKarmaToken) ->
   hasAtSymbol = userKarmaToken.startsWith('@')
   username = if hasAtSymbol
-    then userKarmaToken.slice(1, -2)
-    else userKarmaToken.slice(0, -2)
+  then userKarmaToken.slice(1, -2)
+  else userKarmaToken.slice(0, -2)
 
   operator = userKarmaToken.slice(-2)
 
   {
-    hasAtSymbol,
+    type: 'UserKarmaExpression',
     username: username.toLowerCase(),
     operator
   }
@@ -49,15 +49,13 @@ module.exports = (robot) ->
     seenUsernames = new Set()
     userKarmaExpressions = getUserKarmaExpressions(msg.match)
       .filter((expr) ->
-        # Only keep the first expression seen for per user
-        if expr.username && seenUsernames.has(expr.username)
+        # Unless the user has been already been seen, 
+        # Or unless the user does not exist
+        unless seenUsernames.has(expr.username) or !robot.brain.userForName(expr.username)
           seenUsernames.add(expr.username)
 
-          # don't let user adjust their own score, and ignore "c" unless it
-          # starts with a "@" because "c++" is probably a mention of the
-          # language, not a person or thing
-          expr.username != msg.message.user.name.toLowerCase()) &&
-            (expr.username !== 'c' || expr.hasAtSymbol)
+          # don't let user adjust their own score
+          expr.username != msg.message.user.name.toLowerCase())
 
     for { username, operator } in userKarmaExpressions
       # get the current karma points
