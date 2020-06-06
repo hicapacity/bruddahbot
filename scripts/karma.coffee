@@ -52,7 +52,7 @@ module.exports = (robot) ->
       .filter((expr) ->
         # Unless the user has been already been seen, 
         # Or unless the user does not exist
-        unless seenUsernames.has(expr.username) or !robot.brain.userForName(expr.username)
+        if !seenUsernames.has(expr.username) and robot.brain.userForName(expr.username)
           seenUsernames.add(expr.username)
 
           # don't let user adjust their own score
