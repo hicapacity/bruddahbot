@@ -50,7 +50,7 @@ module.exports = (robot) ->
     userKarmaExpressions = getUserKarmaExpressions(msg.match)
       .filter((expr) ->
         # Only keep the first expression seen for per user
-        if expr.username && seenUsernames.has(expr.username)
+        if expr.username && !seenUsernames.has(expr.username)
           seenUsernames.add(expr.username)
 
           # don't let user adjust their own score, and ignore "c" unless it
